@@ -1,16 +1,4 @@
 #!/bin/bash
-#SBATCH --nodes=1
-#SBATCH --gres=gpu:4
-#SBATCH --ntasks-per-node=4
-#SBATCH --cpus-per-task=16
-#SBATCH --mem=240000M
-#SBATCH --partition=gpuA100x4
-#SBATCH --job-name=dphubert
-#SBATCH --time=2-00:00:00
-
-# first source conda.sh, and then
-# activate your conda environment
-
 set -x
 
 # shared config
