@@ -4,7 +4,7 @@ set -x
 # shared config
 tsv_dir=data/librispeech        # data path
 train_subset=train960           # train subset name: train960, train100
-teacher_ckpt=pretrained/hubert-base-ls960.hf.pth    # checkpoint path
+teacher_ckpt=pretrained/vec.fairseq.pth    # checkpoint path
 student_ckpt=${teacher_ckpt}    # student initialization, same as teacher
 distill_layers=0.4,8,12         # use period to separate groups where each group shares the same linear layer: [0], [4, 8, 12]
 distill_mode=layer2layer        # "layer2layer", "predlayer"
@@ -33,7 +33,7 @@ final_exp_dir=${root_dir}/lr${final_lr}_up${final_warmup}_max${final_max}
 # Training step 1: distill
 mkdir -p ${root_dir}
 
-srun python distill.py \
+python distill.py \
     --tsv_dir ${tsv_dir} \
     --train_subset ${train_subset} \
     --seconds_per_batch 160 \
@@ -72,7 +72,7 @@ python prune.py \
 pruned_ckpt=${root_dir}/ckpts/pruned_hubert_base.pth
 mkdir -p ${final_exp_dir}
 
-srun python final_distill.py \
+python final_distill.py \
     --tsv_dir ${tsv_dir} \
     --train_subset ${train_subset} \
     --seconds_per_batch 160 \
